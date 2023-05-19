@@ -5,6 +5,8 @@ import { first } from 'rxjs/operators';
 import { UserModel } from '../../models/user.model';
 import { AuthService } from '../../services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthServiceService } from '../../services/auth-service.service';
+import { User } from 'src/app/modules/account/models/user.model';
 
 @Component({
   selector: 'app-login',
@@ -13,36 +15,37 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit, OnDestroy {
   // KeenThemes mock, change it to:
-  defaultAuth: any = {
-    email: 'admin@demo.com',
-    password: 'demo',
-  };
+  // defaultAuth: any = {
+  //   email: 'admin@demo.com',
+  //   password: 'demo',
+  // };
   loginForm: FormGroup;
   hasError: boolean;
-  returnUrl: string;
-  isLoading$: Observable<boolean>;
+  // returnUrl: string;
+  // isLoading$: Observable<boolean>;
 
   // private fields
   private unsubscribe: Subscription[] = []; // Read more: => https://brianflove.com/2016/12/11/anguar-2-unsubscribe-observables/
 
   constructor(
     private fb: FormBuilder,
-    private authService: AuthService,
+    // private authService: AuthService,
+    private authServices: AuthServiceService,
     private route: ActivatedRoute,
     private router: Router
   ) {
-    this.isLoading$ = this.authService.isLoading$;
+    // this.isLoading$ = this.authService.isLoading$;
     // redirect to home if already logged in
-    if (this.authService.currentUserValue) {
-      this.router.navigate(['/']);
-    }
+    // if (this.authService.currentUserValue) {
+    //   this.router.navigate(['/']);
+    // }
   }
 
   ngOnInit(): void {
     this.initForm();
     // get return url from route parameters or default to '/'
-    this.returnUrl =
-      this.route.snapshot.queryParams['returnUrl'.toString()] || '/';
+    // this.returnUrl =
+    //   this.route.snapshot.queryParams['returnUrl'.toString()] || '/';
   }
 
   // convenience getter for easy access to form fields
@@ -53,20 +56,20 @@ export class LoginComponent implements OnInit, OnDestroy {
   initForm() {
     this.loginForm = this.fb.group({
       email: [
-        this.defaultAuth.email,
+        '',
         Validators.compose([
           Validators.required,
           Validators.email,
-          Validators.minLength(3),
-          Validators.maxLength(320), // https://stackoverflow.com/questions/386294/what-is-the-maximum-length-of-a-valid-email-address
+          Validators.minLength(10),
+          Validators.maxLength(50), // https://stackoverflow.com/questions/386294/what-is-the-maximum-length-of-a-valid-email-address
         ]),
       ],
       password: [
-        this.defaultAuth.password,
+        '',
         Validators.compose([
           Validators.required,
-          Validators.minLength(3),
-          Validators.maxLength(100),
+          Validators.minLength(8),
+          Validators.maxLength(30),
         ]),
       ],
     });
@@ -74,12 +77,15 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   submit() {
     this.hasError = false;
-    const loginSubscr = this.authService
+    const loginSubscr = this.authServices
       .login(this.f.email.value, this.f.password.value)
       .pipe(first())
-      .subscribe((user: UserModel | undefined) => {
+      .subscribe((user: User | undefined) => {
         if (user) {
-          this.router.navigate([this.returnUrl]);
+          console.log(user.token);
+          console.log(user);
+          localStorage.setItem('token',user.token)
+          this.router.navigate(['/dashboard/documents']);
         } else {
           this.hasError = true;
         }

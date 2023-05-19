@@ -5,6 +5,8 @@ import { FileManagerRoutingModule } from './file-manager-routing.module';
 import { FileManagerComponent } from './file-manager.component';
 import { FoldersComponent } from './folders/folders.component';
 import { FilesComponent } from './files/files.component';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -15,7 +17,10 @@ import { FilesComponent } from './files/files.component';
   ],
   imports: [
     CommonModule,
-    FileManagerRoutingModule
+    FileManagerRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
   ]
 })
 export class FileManagerModule { }

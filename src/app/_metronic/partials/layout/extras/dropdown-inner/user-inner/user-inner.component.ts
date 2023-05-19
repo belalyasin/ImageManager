@@ -2,6 +2,9 @@ import { Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { TranslationService } from '../../../../../../modules/i18n';
 import { AuthService, UserType } from '../../../../../../modules/auth';
+import { AuthServiceService } from 'src/app/modules/auth/services/auth-service.service';
+import { Router } from '@angular/router';
+import { User } from 'src/app/modules/account/models/user.model';
 
 @Component({
   selector: 'app-user-inner',
@@ -13,23 +16,57 @@ export class UserInnerComponent implements OnInit, OnDestroy {
   @HostBinding('attr.data-kt-menu') dataKtMenu = 'true';
 
   language: LanguageFlag;
-  user$: Observable<UserType>;
+  user$: User;
   langs = languages;
+  imageExists: boolean;
+  imageUrl: string;
   private unsubscribe: Subscription[] = [];
 
   constructor(
-    private auth: AuthService,
+    private auth: AuthServiceService,
+    private router: Router,
     private translationService: TranslationService
   ) {}
 
   ngOnInit(): void {
-    this.user$ = this.auth.currentUserSubject.asObservable();
+    // this.user$ = this.auth.isLoggedIn().asObservable();
+    this.getMe();
     this.setLanguage(this.translationService.getSelectedLanguage());
   }
 
+  getMe() {
+    this.auth.getCurrentUser().subscribe(
+      (response) => {
+        // console.log(response);
+        this.user$ = {...response.data};
+        // console.log('user->'+JSON.stringify(this.user$));
+        this.checkImageExists();
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+  }
+  checkImageExists() {
+    // Assuming you have a property in the user object that contains the image URL
+    this.imageExists =
+      this.user$.avatar !== null && this.user$.avatar !== undefined;
+    this.imageUrl = this.imageExists ? this.user$.avatar : '';
+  }
   logout() {
-    this.auth.logout();
-    document.location.reload();
+    // console.log('34 --herLogout');
+
+    this.auth.logout().subscribe(
+      (response) => {
+        // console.log('38 --herLogout');
+        localStorage.removeItem('token');
+        this.router.navigate(['/auth/login']);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+    // document.location.reload();
   }
 
   selectLanguage(lang: string) {

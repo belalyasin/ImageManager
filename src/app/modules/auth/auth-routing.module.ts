@@ -5,6 +5,7 @@ import { LoginComponent } from './components/login/login.component';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { LogoutComponent } from './components/logout/logout.component';
+import { AuthGuard } from './services/auth.guard';
 
 const routes: Routes = [
   {
@@ -19,7 +20,7 @@ const routes: Routes = [
       {
         path: 'login',
         component: LoginComponent,
-        data: { returnUrl: window.location.pathname },
+        // data: { returnUrl: window.location.pathname },
       },
       {
         path: 'registration',
@@ -32,6 +33,7 @@ const routes: Routes = [
       {
         path: 'logout',
         component: LogoutComponent,
+        canActivate: [AuthGuard]
       },
       { path: '', redirectTo: 'login', pathMatch: 'full' },
       { path: '**', redirectTo: 'login', pathMatch: 'full' },

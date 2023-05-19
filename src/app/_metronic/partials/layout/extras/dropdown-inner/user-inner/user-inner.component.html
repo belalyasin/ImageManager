@@ -1,16 +1,21 @@
-<ng-container *ngIf="user$ | async as _user">
+<!-- <ng-container *ngIf="user$ | async as _user"> -->
+<ng-container >
   <div class="menu-item px-3">
     <div class="menu-content d-flex align-items-center px-3">
-      <div class="symbol symbol-50px me-5">
-        <img alt="Logo" [src]="_user.pic" />
+      <div *ngIf="imageExists; else defaultImage" class="symbol symbol-50px me-5">
+        <img alt="Logo" [src]="user$.avatar" />
       </div>
-
+      <ng-template #defaultImage>
+        <div class="symbol symbol-50px me-5 p-4 fallback-image" style="background-color: #dcd2d2;">
+          {{ user$.name.charAt(0).toUpperCase() }}{{ user$.name.charAt(1).toUpperCase() }}
+        </div>
+      </ng-template>
       <div class="d-flex flex-column">
         <div class="fw-bolder d-flex align-items-center fs-5">
-          {{ _user.firstname }} {{ _user.lastname }}
+          {{ user$.name }}
         </div>
         <a class="fw-bold text-muted text-hover-primary fs-7 cursor-pointer">
-          {{ _user.email }}
+          {{ user$.email }}
         </a>
       </div>
     </div>

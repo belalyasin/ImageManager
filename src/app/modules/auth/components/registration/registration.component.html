@@ -144,13 +144,26 @@
       type="password"
       placeholder="Password"
       name="password"
-      formControlName="password"
       autocomplete="off"
+      formControlName="password"
       [ngClass]="{
         'is-invalid': registrationForm.controls['password'].invalid,
         'is-valid': registrationForm.controls['password'].valid
       }"
     />
+    <!-- <input
+      class="form-control form-control-lg form-control-solid"
+      type="password"
+      placeholder="Password"
+      name="password"
+      formControlName="password"
+      autocomplete="off"
+      [pattern]="'(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,30}'"
+      [ngClass]="{
+        'is-invalid': registrationForm.controls['password'].invalid,
+        'is-valid': registrationForm.controls['password'].valid
+      }"
+    /> -->
     <ng-container
       [ngTemplateOutlet]="formError"
       [ngTemplateOutletContext]="{
@@ -163,7 +176,7 @@
       [ngTemplateOutlet]="formError"
       [ngTemplateOutletContext]="{
         validation: 'minlength',
-        message: 'Password should have at least 3 symbols',
+        message: 'Password should have at least 8 symbols',
         control: registrationForm.controls['password']
       }"
     ></ng-container>
@@ -171,10 +184,19 @@
       [ngTemplateOutlet]="formError"
       [ngTemplateOutletContext]="{
         validation: 'maxLength',
-        message: 'Password should have maximum 100 symbols',
+        message: 'Password should have maximum 30 symbols',
         control: registrationForm.controls['password']
       }"
     ></ng-container>
+    <!-- <ng-container
+      [ngTemplateOutlet]="formError"
+      [ngTemplateOutletContext]="{
+        validation: 'pattern',
+        message:
+          'Password must contain at least one uppercase letter, one number, and one symbol',
+        control: registrationForm.controls['password']
+      }"
+    ></ng-container> -->
   </div>
   <!--end::Form group-->
 
@@ -193,6 +215,18 @@
         'is-valid': registrationForm.controls['cPassword'].valid
       }"
     />
+    <!-- <input
+      class="form-control form-control-lg form-control-solid"
+      type="password"
+      placeholder="Confirm password"
+      name="cPassword"
+      autocomplete="off"
+      formControlName="cPassword"
+      [ngClass]="{
+        'is-invalid': registrationForm.controls['cPassword'].invalid,
+        'is-valid': registrationForm.controls['cPassword'].valid
+      }"
+    /> -->
     <ng-container
       [ngTemplateOutlet]="formError"
       [ngTemplateOutletContext]="{
@@ -205,7 +239,7 @@
       [ngTemplateOutlet]="formError"
       [ngTemplateOutletContext]="{
         validation: 'minlength',
-        message: 'Confirm Password should have at least 3 symbols',
+        message: 'Confirm Password should have at least 8 symbols',
         control: registrationForm.controls['cPassword']
       }"
     ></ng-container>
@@ -213,19 +247,28 @@
       [ngTemplateOutlet]="formError"
       [ngTemplateOutletContext]="{
         validation: 'maxLength',
-        message: 'Confirm Password should have maximum 100 symbols',
+        message: 'Confirm Password should have maximum 30 symbols',
         control: registrationForm.controls['cPassword']
       }"
     ></ng-container>
+    <!-- <ng-container
+      [ngTemplateOutlet]="formError"
+      [ngTemplateOutletContext]="{
+        validation: 'pattern',
+        message:
+          'Password must contain at least one uppercase letter, one number, and one symbol',
+        control: registrationForm.controls['cPassword']
+      }"
+    ></ng-container> -->
     <ng-container
       *ngIf="
         registrationForm.controls['cPassword'].errors &&
         registrationForm.controls['cPassword'].errors.ConfirmPassword
       "
     >
-      <div class="fv-plugins-message-container">
+      <div *ngIf="!checkConfirmPassword()" class="fv-plugins-message-container">
         <div class="fv-help-block">
-          'Passsword' and 'Confirm Password' didn't match.
+          Password and Confirm Password didn't match.
         </div>
       </div>
     </ng-container>
@@ -233,7 +276,7 @@
   <!--end::Form group-->
 
   <!--begin::Form group-->
-  <div class="fv-row mb-10">
+  <!-- <div class="fv-row mb-10">
     <div class="form-check form-check-custom form-check-solid">
       <input
         id="kt_login_toc_agree"
@@ -255,7 +298,7 @@
         >.
       </label>
     </div>
-  </div>
+  </div> -->
   <!--end::Form group-->
 
   <!--begin::Form group-->
@@ -263,22 +306,20 @@
     <button
       type="submit"
       id="kt_sign_up_submit"
-      [disabled]="
-        registrationForm.invalid || !registrationForm.controls['agree'].value
-      "
       class="btn btn-lg btn-primary w-100 mb-5"
+      [disabled]="registrationForm.invalid"
     >
-      <ng-container *ngIf="(isLoading$ | async) === false">
+      <ng-container>
         <span class="indicator-label">Submit</span>
       </ng-container>
-      <ng-container *ngIf="isLoading$ | async">
+      <!-- <ng-container *ngIf="isLoading$ | async">
         <span class="indicator-progress" [style.display]="'block'">
           Please wait...
           <span
             class="spinner-border spinner-border-sm align-middle ms-2"
           ></span>
         </span>
-      </ng-container>
+      </ng-container> -->
     </button>
     <a
       routerLink="/auth/login"

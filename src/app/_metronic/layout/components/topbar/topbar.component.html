@@ -117,7 +117,10 @@
     data-kt-menu-placement="bottom-end"
     data-kt-menu-flip="bottom"
   >
-    <img src="./assets/media/avatars/300-1.jpg" alt="metronic" />
+    <img  [src]="'../../../../../assets/media/avatars/blank.png'" alt="metronic" />
+    <!-- <div *ngIf="!imageExists" class="symbol symbol-50px me-5 p-4 fallback-image" style="background-color: #dcd2d2;">
+      {{ user$.data.name.charAt(0).toUpperCase() }}{{ user$.data.name.charAt(1).toUpperCase() }}
+    </div> -->
   </div>
   <!-- end::Toggle  -->
   <app-user-inner></app-user-inner>

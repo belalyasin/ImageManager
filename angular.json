@@ -97,22 +97,22 @@
             "inlineStyleLanguage": "scss",
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
-                "src/styles.scss",
-                "src/assets/css/style.dark.bundle.css",
-                "src/assets/plugins/global/plugins.dark.bundle.css",
-                "src/assets/plugins/custom/datatables/datatables.bundle.css"
+                "./src/styles.scss",
+                "./src/assets/css/style.dark.bundle.css",
+                "./src/assets/plugins/global/plugins.dark.bundle.css",
+                "./src/assets/plugins/custom/datatables/datatables.bundle.css"
             ],
             "scripts": [
-              "src/assets/plugins/global/plugins.bundle.js",
-              "src/assets/js/scripts.bundle.js",
-              "src/assets/plugins/custom/datatables/datatables.bundle.js",
-              "src/assets/js/custom/apps/file-manager/list.js",
-              "src/assets/js/widgets.bundle.js",
-              "src/assets/js/custom/widgets.js",
-              "src/assets/js/custom/apps/chat/chat.js",
-              "src/assets/js/custom/utilities/modals/upgrade-plan.js",
-              "src/assets/js/custom/utilities/modals/create-app.js",
-              "src/assets/js/custom/utilities/modals/users-search.js"
+              "./src/assets/plugins/global/plugins.bundle.js",
+              "./src/assets/js/scripts.bundle.js",
+              "./src/assets/plugins/custom/datatables/datatables.bundle.js",
+              "./src/assets/js/custom/apps/file-manager/list.js",
+              "./src/assets/js/widgets.bundle.js",
+              "./src/assets/js/custom/widgets.js",
+              "./src/assets/js/custom/apps/chat/chat.js",
+              "./src/assets/js/custom/utilities/modals/upgrade-plan.js",
+              "./src/assets/js/custom/utilities/modals/create-app.js",
+              "./src/assets/js/custom/utilities/modals/users-search.js"
             ]
           }
         }

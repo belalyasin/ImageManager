@@ -22,14 +22,14 @@
   <!--end::Heading-->
 
   <!-- begin::Alert info-->
-  <ng-container *ngIf="!hasError">
+  <!-- <ng-container *ngIf="!hasError">
     <div class="mb-10 bg-light-info p-8 rounded">
       <div class="text-info">
         Use account <strong>{{ defaultAuth.email }}</strong> and password
         <strong>{{ defaultAuth.password }}</strong> to continue.
       </div>
     </div>
-  </ng-container>
+  </ng-container> -->
   <!-- end::Alert info-->
 
   <!-- begin::Alert error-->
@@ -49,6 +49,7 @@
       class="form-control form-control-lg form-control-solid"
       type="email"
       name="email"
+      placeholder="Email"
       formControlName="email"
       autocomplete="off"
       [ngClass]="{
@@ -111,6 +112,7 @@
       class="form-control form-control-lg form-control-solid"
       type="password"
       name="password"
+      placeholder="Password"
       autocomplete="off"
       formControlName="password"
       [ngClass]="{
@@ -153,15 +155,15 @@
       class="btn btn-lg btn-primary w-100 mb-5"
       [disabled]="loginForm.invalid"
     >
-      <ng-container *ngIf="isLoading$ | async">
+      <!-- <ng-container *ngIf="isLoading$ | async">
         <span class="indicator-progress" [style.display]="'block'">
           Please wait...
           <span
             class="spinner-border spinner-border-sm align-middle ms-2"
           ></span>
         </span>
-      </ng-container>
-      <ng-container *ngIf="!(isLoading$ | async)">
+      </ng-container> -->
+      <ng-container>
         <span class="indicator-label">Continue</span>
       </ng-container>
     </button>
@@ -171,14 +173,7 @@
     <!-- end::Separator  -->
 
     <a
-      class="
-        btn btn-flex
-        flex-center
-        btn-light btn-lg
-        w-100
-        mb-5
-        cursor-pointer
-      "
+      class="btn btn-flex flex-center btn-light btn-lg w-100 mb-5 cursor-pointer"
     >
       <img
         class="h-20px me-3"
